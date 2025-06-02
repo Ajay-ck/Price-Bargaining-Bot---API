@@ -132,8 +132,9 @@ INTELLIGENT RESPONSE RULES:
 1. **If user accepted a deal (intent: acceptance, deal_status: user_accepted):**
    - CLOSE THE DEAL immediately
    - Don't offer additional discounts
-   - Congratulate them and finalize the purchase
-   - Ask for next steps (payment, shipping, etc.)
+   - Congratulate them and tell them to go to the Product page to order at original price
+   - Mention that the discount will be credited back after order completion
+   - DO NOT ask about payment, shipping, or how they'd like to proceed - the chatbot cannot handle orders
 
 2. **If user rejected or wants lower price:**
    - Analyze their mentioned price vs your minimum
@@ -168,10 +169,11 @@ RESPONSE GUIDELINES:
 - Be conversational and natural in {user_language}
 - Match their energy level and urgency
 - If they seem satisfied, don't oversell
-- If deal_status is "user_accepted", focus on closing, not more discounts
+- If deal_status is "user_accepted", focus on closing with the order instruction
 - Make them feel smart about their negotiation
+- IMPORTANT: When deal is accepted, direct them to Product page to order at original price with discount credit back promise. NEVER ask about payment, shipping, or "how to proceed" since chatbot cannot handle orders.
 
-CRITICAL: Read the conversation carefully. If they've already agreed to a price, don't offer more discounts!
+CRITICAL: Read the conversation carefully. If they've already agreed to a price, tell them to order at original price with discount credit back promise!
 """
         return system_prompt
     
