@@ -85,7 +85,7 @@ Only respond with valid JSON, no other text.
     
     def extract_price_from_response(self, response_text):
         """Extract price offers from bot response"""
-        price_pattern = r'\$(\d+(?:\.\d{2})?)'
+        price_pattern = r'₹(\d+(?:\.\d{2})?)'
         matches = re.findall(price_pattern, response_text)
         if matches:
             return float(matches[-1])
@@ -103,7 +103,7 @@ Only respond with valid JSON, no other text.
 LANGUAGE REQUIREMENT:
 - The user is communicating in {user_language}
 - You MUST respond in {user_language} language
-- Keep prices in USD ($) format regardless of language
+- Keep prices in INR (₹) format regardless of language
 """
         
         # Get previous bot offers to avoid repetition
@@ -117,8 +117,8 @@ You are an intelligent multilingual bargaining agent. You must respond naturally
 
 PRODUCT DETAILS:
 - Product Name: {product_details['name']}
-- Original Price: ${original_price}
-- Minimum Price: ${minimum_price:.2f} (NEVER go below this)
+- Original Price: ₹{original_price}
+- Minimum Price: ₹{minimum_price:.2f} (NEVER go below this)
 - Maximum Discount: {self.max_discount_percentage}%
 
 CURRENT CONVERSATION ANALYSIS:
@@ -182,7 +182,7 @@ CRITICAL: Read the conversation carefully. If they've already agreed to a price,
             if msg.get('role') == 'assistant' or msg.get('role') == 'bot':
                 price = self.extract_price_from_response(msg.get('message', ''))
                 if price:
-                    offers.append(f"${price}")
+                    offers.append(f"₹{price}")
         return offers
     
     def format_conversation_history(self, history):
@@ -216,7 +216,7 @@ CRITICAL: Read the conversation carefully. If they've already agreed to a price,
                 # Initial greeting
                 product_name = product_details['name']
                 product_price = product_details['price']
-                return (f"Hello! I see you're interested in the {product_name} listed at ${product_price}. "
+                return (f"Hello! I see you're interested in the {product_name} listed at ₹{product_price}. "
                        f"It's a quality item and I'm here to help you get a great deal! What would you like to know?", 
                        None, "English", {"intent": "greeting", "deal_status": "just_started"})
             
